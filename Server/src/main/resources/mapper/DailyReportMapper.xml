@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.youthfighter.dailyreport.mapper.DailyReportMapper">
+    <select id="queryDataByAuthorAndMonth" resultType="top.youthfighter.dailyreport.model.DailyReport">
+        select * from dailyreport
+        where reportDate  <![CDATA[>= ]]> #{startTime} and reportDate  <![CDATA[<= ]]> #{endTime} and author=#{author}
+        order by reportDate,tagId
+    </select>
+
+    <select id="selectDayData" resultType="top.youthfighter.dailyreport.model.DailyReport">
+        select * from dailyreport
+        where author=#{author} and reportDate=#{reportDate}
+    </select>
+
+    <insert id="insert">
+        insert into dailyreport(id, year, month, day, reportDate, author, creater, createDateTime, duration, content)
+        values(
+            #{id},
+            #{year},
+            #{month},
+            #{day},
+            #{reportDate},
+            #{author},
+            #{creater},
+            #{createDateTime},
+            #{duration},
+            #{content}
+        )
+    </insert>
+
+    <update id="update">
+        update dailyreport
+        set year=#{year},
+        month=#{month},
+        day=#{day},
+        reportDate=#{reportDate},
+        author=#{author},
+        creater=#{creater},
+        createDateTime=#{createDateTime},
+        duration=#{duration},
+        content=#{content}
+        where id=#{id}
+    </update>
+</mapper>
