@@ -1,0 +1,166 @@
+.c-container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    color: white;
+}
+header{
+    display: flex;
+    margin-bottom: 30px;
+    align-items: center;
+}
+.h-left,.h-right{
+    display: flex;
+}
+.arrow-btn{
+    padding: 7px 10px;
+    background: rgba(247, 247, 247, 0.4);
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+}
+.left-icon{
+    height: 16px;
+    width: 16px;
+    background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABVklEQVRYR2NkGGDAOMD2M5DtgL45i1X+//23mZGB8UJRelwkuR4hywH90+cr/GNkOs7IyCjx/z/DzuKMOA+6OQBk+X8m5sMMDAwyDAz/r/78y2JbmRX9ni4OoLblIEcTHQWTZi+R+fPv33Fq+RwWYkQ5AGT573//jjAyMMhTI9iRo4ugA2hpOcEo6Jo6X4KZhfkELXxOMApAlrOwgFO7CgPD/ws//7I4UZLaceUSrFGAbjnLT2b7vLyYT+RmNXz6MBwwad480T+/WY7BfE5LyzHSAMjy37+ZDzEyMGqAgp3WlqM4YCAsR3FA38xFBxgYGOzp5XOMXNA3Y+FJBkZGs4FzwJxVQv//fj9Kz/gfXIkQFicDmg1hjhjQgojejsBbG6JVRjSpDwZ3dQxPmAPZIEF2xIA1yWCOGNBGKa0cQTARYmtMDGjHBOagAe2aUbNpRlYUUNMBANyFEDBxwQqEAAAAAElFTkSuQmCC') 0 0 no-repeat;
+    background-size: 100%;
+}
+.right-icon{
+    height: 16px;
+    width: 16px;
+    background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABY0lEQVRYR8XXz0vDMBQH8G9ixi7Df0UvgtXVP0BvnpWxoegQBk7wz+hhMJgggsOT4H8ggjfPnndQ2GHgPzAwaSSHQYmlZPnR9NqW9+l7L+kLQeSLRI4PJ0A2md4D8gCMHg7PTmc2H+MKeAHBsZRyQRhNbRBOgNHoaZM3xTtAtm0RTgCVch1BZZ5c97tfpuVwBugIAHOSi9QU4QXggvAGWCF+m/krAXZUJhilyeD8ZF5VDq8AFWg8fm4t2fJNISTw3aC0XYXwDlgXEQRQhhBc7N5edRd6OYIBdASAGeci1RFBASaI4IAyBGvwvUGv96Pu1QL41xNSftxcdpJoAEB+Di86W7UBinuD3ozBS1AVPHgG9F2xbC8IlgHTLTkIwDR4kBKsE9w7QGu4en/HajQrzgKmU5GXHijOhbWPZFGH0uhjeTaZxj2YZHePDxLYJxv0yOZU5H0Zmh5Gis95WQU2gVfv/AEu9hIwjNA12gAAAABJRU5ErkJggg==') 0 0 no-repeat;
+    background-size: 100%;
+}
+.show-type{
+    width: 90px;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    background: rgba(247, 247, 247,0.4);
+    cursor: pointer;
+}
+.show-type:first-child{
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.show-type:last-child{
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.t-btn{
+    margin-left: 10px;
+    width: 60px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: rgba(247, 247, 247, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.selected{
+    color: white;
+    background-color: #00acc1;
+}
+.h-center{
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+}
+.table{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+.table-header{
+    display: flex;
+    height: 40px;
+    border: 1px solid #f7f7f7;
+}
+.table-th{
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    background: rgba(247, 247, 247,0.4);
+}
+.table-body{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.table-tr{
+    display: flex;
+    flex-grow: 1;
+    border-bottom: 1px solid #f7f7f7;
+    flex-basis: 0;
+}
+.table-td{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    flex-basis: 16px;
+    border-right: 1px solid #f7f7f7;
+    cursor: pointer;
+    min-width: 0;
+}
+.table-td:first-child{
+    border-left: 1px solid #f7f7f7;
+}
+.c-day{
+    display: flex;
+    flex-shrink: 0;
+}
+.other{
+    min-height: 1px;
+    flex-grow: 1;
+}
+.day-num{
+    padding: 2px;
+    align-self: flex-end;
+}
+.not-cur-month{
+    opacity: 0.4
+}
+.cur-day{
+    background: rgba(252,248,227,0.4);
+}
+.c-content{
+    display: flex;
+    flex-grow: 1;
+}
+.tags{
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.tag{
+    display: flex;
+    flex-shrink: 0;
+    width: 50px;
+    margin: 2px 5px;
+    color: white;
+    border-radius: 2px;
+    padding: 0 5px;
+    font-size: 12px;
+    height: 26px;
+    align-items: center;
+    justify-content: center;
+}
+.tag span{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.circle{
+    display: flex;
+    flex-grow: 1;
+    border-radius: 50%;
+    background: #323a46;
+}
+

@@ -1,0 +1,51 @@
+<div class="c-container">
+  <header>
+    <div class="h-left">
+      <div class="arrow-btn" (click)="lastMonth()">
+        <div class="left-icon"></div>
+      </div>
+      <div class="arrow-btn" (click)="nextMonth()">
+        <div class="right-icon"></div>
+      </div>
+      <div class="t-btn" [ngClass]="{'selected': isCurrentMonth()}" (click)="toCurrentMonth()">
+        本月
+      </div>
+    </div>
+    <div class="h-center">
+      <h2>{{year}}年{{month + 1}}月</h2>
+    </div>
+    <div class="h-right">
+      <div class="show-type selected">日历</div>
+      <div class="show-type">时光轴</div>
+    </div>
+  </header>
+  <section class="table">
+    <div class="table-header">
+      <div class="table-th">周日</div>
+      <div class="table-th">周一</div>
+      <div class="table-th">周二</div>
+      <div class="table-th">周三</div>
+      <div class="table-th">周四</div>
+      <div class="table-th">周五</div>
+      <div class="table-th">周六</div>
+    </div>
+    <div class="table-body" #tbody>
+      <div class="table-tr" *ngFor="let rdata of calenderData;let i = index">
+        <div class="table-td" *ngFor="let cdata of rdata; let j = index" [ngClass]="{'cur-day': isToday(cdata.date)}">
+          <div class="c-day">
+            <div class="other"></div>
+            <div class="day-num" [ngClass]="{'not-cur-month':cdata.month != month}">{{cdata.day}}</div>
+          </div>
+          <div class="c-content">
+            <div class="tags" (dragover)="allowDrop($event)" (drop)="drop($event)" [attr.data-row]="i" [attr.data-column]="j">
+              <div class="tag" [style.backgroundColor]="types[tag.type].color" *ngFor="let tag of cdata.tags;let idx=index;" draggable="true"
+                (dragstart)="drag($event, tag.type)" [attr.data-row]="i" [attr.data-column]="j">
+                <a [title]="types[tag.type].value">{{types[tag.type].name}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
