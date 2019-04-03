@@ -37,10 +37,9 @@
             <div class="day-num" [ngClass]="{'not-cur-month':cdata.month != month}">{{cdata.day}}</div>
           </div>
           <div class="c-content">
-            <div class="tags" (dragover)="allowDrop($event)" (drop)="drop($event)" [attr.data-row]="i" [attr.data-column]="j">
-              <div class="tag" [style.backgroundColor]="types[tag.type].color" *ngFor="let tag of cdata.tags;let idx=index;" draggable="true"
-                (dragstart)="drag($event, tag.type)" [attr.data-row]="i" [attr.data-column]="j">
-                <a [title]="types[tag.type].value">{{types[tag.type].name}}</a>
+            <div class="tags" [attr.data-row]="i" [attr.data-column]="j">
+              <div class="tag" [style.backgroundColor]="types[tag.tagId].color" *ngFor="let tag of cdata.tags;let idx=index;"  [attr.data-row]="i" [attr.data-column]="j">
+                <a [title]="tag.describition">{{types[tag.tagId].name}}</a>
               </div>
             </div>
           </div>

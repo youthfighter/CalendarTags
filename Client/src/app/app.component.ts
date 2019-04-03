@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { AppService } from 'src/app/app.service';
+import { CalendarComponent } from 'src/app/components/calendar/calendar.component';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,13 @@ export class AppComponent implements OnInit {
   constructor(private appService: AppService) {}
 
   async ngOnInit() {
-    let result = await this.appService.getMonthData();
-    console.log(result);
+    this.calendar.MonthChangedEvent.subscribe(async data => {
+      let result = await this.appService.getMonthData(data.year, data.month) as any;
+      this.calendar.setTagsBatch(result.data);
+      console.log(result);
+    });   
   }
+
+  @ViewChild('calendar')
+  calendar: CalendarComponent;
 }

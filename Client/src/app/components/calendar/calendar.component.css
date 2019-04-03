@@ -4,6 +4,7 @@
     height: 100%;
     width: 100%;
     color: white;
+    min-height: 450px;
 }
 header{
     display: flex;
@@ -138,6 +139,9 @@ header{
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+}
+.tag:hover{
+    opacity: 0.8;
 }
 .tag{
     display: flex;
