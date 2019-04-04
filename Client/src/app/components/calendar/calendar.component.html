@@ -38,8 +38,8 @@
           </div>
           <div class="c-content">
             <div class="tags" [attr.data-row]="i" [attr.data-column]="j">
-              <div class="tag" [style.backgroundColor]="types[tag.tagId].color" *ngFor="let tag of cdata.tags;let idx=index;"  [attr.data-row]="i" [attr.data-column]="j">
-                <a [title]="tag.describition">{{types[tag.tagId].name}}</a>
+              <div class="tag" [style.backgroundColor]="tag.color" [attr.data-tagId]="tag.id" *ngFor="let tag of cdata.tags;let idx=index;"  [attr.data-row]="i" [attr.data-column]="j">
+                <a [title]="tag.describition">{{tag.name}}</a>
               </div>
             </div>
           </div>

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+import { Tag } from './Tag';
 
 @Component({
 	selector: 'app-calendar',
@@ -10,25 +11,19 @@ import { EventEmitter } from '@angular/core';
 })
 export class CalendarComponent implements OnInit {
 
-	calenderData: any[][] = [[], [], [], [], [], []];
-	private styleType = 'normal'; //normal small
+	private _calenderData: any[][] = [[], [], [], [], [], []];
+	get calenderData() {
+		return this._calenderData;
+	}
 	private tempMonthDatas = new Map(); //月数据缓存
 	private _year: number;
 	get year() {
 		return this._year;
 	}
 	set year(value) {
+		if (value < 1970) value = 1970;
 		this._year = value;
 	}
-
-	private types = [
-		{ name: '学习', color: '#00acc1' },
-		{ name: '看书', color: '#25b343' },
-		{ name: '锻炼', color: '#4b88e4' },
-		{ name: '单词', color: '#f7b84b' },
-		{ name: '做饭', color: '#f1556c' },
-		{ name: '总结', color: '#515A6E' }
-	];
 
 	private _month: number;
 	get month() {
@@ -55,25 +50,13 @@ export class CalendarComponent implements OnInit {
 		this.year = curDate.getFullYear();
 		this.month = curDate.getMonth();
 		this.initCalenderData();
-		this.initStyleType();
-		console.log(this.tbody);
-		console.log(this.tag)
-		//this.setTags(1, 1, [{ type: 1 }, { type: 0 }, { type: 2 }, { type: 3 }, { type: 4 }, { type: 5 }]);
-	}
-
-	private initStyleType() {
-		console.log(this.tbody.nativeElement.clientHeight)
-	}
-
-	public turnToMonth(year: number, month: number) {
-		if (!year || !month) return;
 	}
 
 	private initCalenderData() {
 		this.MonthChangedEvent.emit({ year: this.year, month: this.month });
 		let tempMonthData = this.tempMonthDatas.get(`${this.year}-${this.month}`);
 		if (tempMonthData) {
-			this.calenderData = tempMonthData;
+			this._calenderData = tempMonthData;
 			return false;
 		}
 		let targetDate = new Date(this.year, this.month);
@@ -95,9 +78,9 @@ export class CalendarComponent implements OnInit {
 				tempCalenderData[i][j] = tempArr[idx];
 			}
 		}
-		this.calenderData = tempCalenderData;
+		this._calenderData = tempCalenderData;
 		this.tempMonthDatas.set(`${this.year}-${this.month}`, tempCalenderData);
-		console.log(this.calenderData);
+		console.log(this._calenderData);
 	}
 
 	isToday(cd: Date) {
@@ -128,7 +111,29 @@ export class CalendarComponent implements OnInit {
 		this.initCalenderData();
 	}
 
-	private hasTag(tagsArr: any[], type: number) {
+	public setTags(day: number, tags: Tag[]) {
+		if (day < 1) return
+		this._calenderData.forEach(ele => {
+			ele.forEach(e => {
+				if (this.year === e.year && this.month === e.month && day === e.day) {
+					e['tags'] = tags;
+				}
+			});
+		});
+	}
+
+	public setTagsBatch(data: Map<number, Tag[]>) {
+		if (!data) return;
+		this._calenderData.forEach(ele => {
+			ele.forEach(e => {
+				if (this.year === e.year && this.month === e.month) {
+					e['tags'] = data[e.day] || [];
+				}
+			});
+		});
+	}
+
+	/* private hasTag(tagsArr: any[], type: number) {
 		let flag = false;
 		for (let ele of tagsArr) {
 			if (ele.type === type) {
@@ -140,28 +145,15 @@ export class CalendarComponent implements OnInit {
 	}
 
 	public addTag(i: number, j: number, type: number) {
-		let tagsArr = this.calenderData[i][j].tags;
+		let tagsArr = this._calenderData[i][j].tags;
 		if (tagsArr) {
 			if (!this.hasTag(tagsArr, type)) tagsArr.push({ type });
 		} else {
-			this.calenderData[i][j].tags = [{ type }];
+			this._calenderData[i][j].tags = [{ type }];
 		}
-	}
+	} */
 
-	public setTags(i: number, j: number, tags: any[]) {
-		this.calenderData[i][j].tags = tags;
-	}
-
-	public setTagsBatch(data: any) {
-		this.calenderData.forEach(ele => {
-			ele.forEach(e => {
-				if (this.year === e.year && this.month === e.month) {
-					e['tags'] = data[e.day] || [];
-				}
-			});
-		});
-	}
-	drag(event, type) {
+	/* drag(event, type) {
 		console.log(event);
 		event.dataTransfer.setData("Text", type);
 	}
@@ -178,7 +170,7 @@ export class CalendarComponent implements OnInit {
 		let column = parseInt(ele.dataset.column);
 		if (isNaN(row) || isNaN(column)) return false;
 		this.addTag(row, column, parseInt(event.dataTransfer.getData("Text")));
-	}
+	} */
 
 	@ViewChild('tbody')
 	tbody: ElementRef;
