@@ -1,5 +1,6 @@
 package top.youthfighter.dailyreport.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class DailyReport {
@@ -29,7 +30,6 @@ public class DailyReport {
     public Long getReportDate() {
         return reportDate;
     }
-
     public void setReportDate(Long reportDate) {
         this.reportDate = reportDate;
     }

@@ -2,7 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="top.youthfighter.dailyreport.mapper.DailyReportMapper">
     <select id="queryDataByAuthorAndMonth" resultType="top.youthfighter.dailyreport.model.DailyReport">
-        select * from dailyreport
+        select
+        dailyreport.id AS guid,
+        dailyreport.author AS author,
+        dailyreport.createDateTime as createDateTime,
+        dailyreport.describition as describition,
+        dailyreport.images as image,
+        dailyreport.reportDate as reportDate,
+        dailyreport.tagId as id,
+        dailyreport.url as url,
+        tag.name as name,
+        tag.color as color
+        from dailyreport
+        dailyreport LEFT JOIN tag ON dailyreport.tagId = tag.id
         where reportDate  <![CDATA[>= ]]> #{startTime} and reportDate  <![CDATA[<= ]]> #{endTime} and author=#{author}
         order by reportDate,tagId
     </select>
