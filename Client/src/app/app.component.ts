@@ -3,6 +3,7 @@ import { OnInit } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { CalendarComponent } from 'src/app/components/calendar/calendar.component';
 import { ViewChild } from '@angular/core';
+import { Tag } from './components/calendar/Tag';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +18,20 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.calendar.MonthChangedEvent.subscribe(async data => {
       let result = await this.appService.getMonthData(data.year, data.month) as any;
-      this.calendar.setTagsBatch(result.data);
+      if (result.error) {
+        console.log(result.error);
+        return;
+      }
+      this.calendar.setMonthTags(result.data);
       console.log(result);
-    });   
+    });
+    this.calendar.TagMouseOverEvent.subscribe((data: Map<number, Tag[]>) => {
+      console.log(data);
+    });
+
+    this.calendar.TagMouseOutEvent.subscribe((data: Map<number, Tag[]>) => {
+      console.log(data);
+    });
   }
 
   @ViewChild('calendar')

@@ -3,7 +3,6 @@ import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Tag } from './Tag';
-import { Diary } from './Diary';
 
 @Component({
 	selector: 'app-calendar',
@@ -113,33 +112,42 @@ export class CalendarComponent implements OnInit {
 	}
 
 	/**
-	 * 
 	 * @param day 要设置的日记是那一天
-	 * @param diaries 日记数组
+	 * @param tags 标签数组
 	 */
-	public setDiaries(day: number, diaries: Diary[]) {
+	public setDayTags(day: number, tags: Tag[]) {
 		if (day < 1) return
 		this._calenderData.forEach(ele => {
 			ele.forEach(e => {
 				if (this.year === e.year && this.month === e.month && day === e.day) {
-					e['diaries'] = diaries;
+					e['tags'] = tags;
 				}
 			});
 		});
 	}
 
 	/**
-	 * 设置某月每天的日记
+	 * 设置某月每天的标签
 	 */
-	public setDiariesBatch(data: Map<number, Diary[]>) {
+	public setMonthTags(data: Map<number, Tag[]>) {
 		if (!data) return;
 		this._calenderData.forEach(ele => {
 			ele.forEach(e => {
 				if (this.year === e.year && this.month === e.month) {
-					e['diaries'] = data[e.day] || [];
+					e['tags'] = data[e.day] || [];
 				}
 			});
 		});
+	}
+
+
+	public TagMouseOverEvent = new EventEmitter();
+	private mouseOverTag(data: Map<number, Tag[]>) {
+		this.TagMouseOverEvent.emit(data);
+	}
+	public TagMouseOutEvent = new EventEmitter();
+	private mouseOutTag(data: Map<number, Tag[]>) {
+		this.TagMouseOutEvent.emit(data);
 	}
 
 	/* private hasTag(tagsArr: any[], type: number) {
