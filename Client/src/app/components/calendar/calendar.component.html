@@ -37,9 +37,9 @@
             <div class="day-num" [ngClass]="{'not-cur-month':cdata.month != month}">{{cdata.day}}</div>
           </div>
           <div class="c-content">
-            <div class="tags" [attr.data-row]="i" [attr.data-column]="j">
-              <div class="tag" [style.backgroundColor]="tag.color" [attr.data-tagId]="tag.id" *ngFor="let tag of cdata.tags;let idx=index;"  [attr.data-row]="i" [attr.data-column]="j">
-                <a [title]="tag.describition">{{tag.name}}</a>
+            <div class="diaries" [attr.data-row]="i" [attr.data-column]="j">
+              <div class="tag" [style.backgroundColor]="diary.tag.color" [attr.data-tagId]="diary.tag.id" *ngFor="let diary of cdata.diaries;let idx=index;"  [attr.data-row]="i" [attr.data-column]="j">
+                <a [title]="diary.describition">{{diary.tag.name}}</a>
               </div>
             </div>
           </div>

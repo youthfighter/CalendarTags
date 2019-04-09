@@ -3,6 +3,7 @@ import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Tag } from './Tag';
+import { Diary } from './Diary';
 
 @Component({
 	selector: 'app-calendar',
@@ -111,23 +112,31 @@ export class CalendarComponent implements OnInit {
 		this.initCalenderData();
 	}
 
-	public setTags(day: number, tags: Tag[]) {
+	/**
+	 * 
+	 * @param day 要设置的日记是那一天
+	 * @param diaries 日记数组
+	 */
+	public setDiaries(day: number, diaries: Diary[]) {
 		if (day < 1) return
 		this._calenderData.forEach(ele => {
 			ele.forEach(e => {
 				if (this.year === e.year && this.month === e.month && day === e.day) {
-					e['tags'] = tags;
+					e['diaries'] = diaries;
 				}
 			});
 		});
 	}
 
-	public setTagsBatch(data: Map<number, Tag[]>) {
+	/**
+	 * 设置某月每天的日记
+	 */
+	public setDiariesBatch(data: Map<number, Diary[]>) {
 		if (!data) return;
 		this._calenderData.forEach(ele => {
 			ele.forEach(e => {
 				if (this.year === e.year && this.month === e.month) {
-					e['tags'] = data[e.day] || [];
+					e['diaries'] = data[e.day] || [];
 				}
 			});
 		});
