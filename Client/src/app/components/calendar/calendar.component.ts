@@ -10,7 +10,12 @@ import { Tag } from './Tag';
 	styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-
+	
+	@Input('canEdit')
+	private canEdit = false;
+	get CanEdit() {
+		return this.canEdit;
+	}
 	private _calenderData: any[][] = [[], [], [], [], [], []];
 	get calenderData() {
 		return this._calenderData;
@@ -150,7 +155,7 @@ export class CalendarComponent implements OnInit {
 		this.TagMouseOutEvent.emit(data);
 	}
 
-	/* private hasTag(tagsArr: any[], type: number) {
+	private hasTag(tagsArr: any[], type: number) {
 		let flag = false;
 		for (let ele of tagsArr) {
 			if (ele.type === type) {
@@ -168,26 +173,28 @@ export class CalendarComponent implements OnInit {
 		} else {
 			this._calenderData[i][j].tags = [{ type }];
 		}
-	} */
+	}
 
-	/* drag(event, type) {
+	drag(event, data) {
+		if (!this.canEdit) return false;
 		console.log(event);
-		event.dataTransfer.setData("Text", type);
+		event.dataTransfer.setData("Text", JSON.stringify(data));
 	}
 
 	allowDrop(event) {
+		if (!this.canEdit) return false;
 		event.preventDefault();
 		console.log('allow')
 	}
 
-	drop(event) {
+	private BeforeAddTagEvent = new EventEmitter();
+	drop(event, row: number, column: number) {
+		if (!this.canEdit) return false;
 		event.preventDefault();
-		let ele = event.target as HTMLDivElement;
-		let row = parseInt(ele.dataset.row);
-		let column = parseInt(ele.dataset.column);
 		if (isNaN(row) || isNaN(column)) return false;
+		this.BeforeAddTagEvent.emit(JSON.parse(event.dataTransfer.getData("Text")))
 		this.addTag(row, column, parseInt(event.dataTransfer.getData("Text")));
-	} */
+	}
 
 	@ViewChild('tbody')
 	tbody: ElementRef;
