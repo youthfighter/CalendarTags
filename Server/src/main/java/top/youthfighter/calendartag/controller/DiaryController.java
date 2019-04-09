@@ -1,7 +1,10 @@
 package top.youthfighter.calendartag.controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import top.youthfighter.calendartag.dto.DayReportDTO;
+import top.youthfighter.calendartag.dto.DiaryDTO;
 import top.youthfighter.calendartag.model.Diary;
 import top.youthfighter.calendartag.model.RequestResult;
 import top.youthfighter.calendartag.service.DiaryService;
@@ -41,16 +44,19 @@ public class DiaryController {
         long firstDay = DateUtil.getFirstDay(year, month-1);
         long lastDay = DateUtil.getLastDay(year, month-1);
         List<Diary> drs = diaryService.queryDataByAuthorAndMonth(firstDay, lastDay, author);
-        Map<String, List<Diary>> map = new HashMap();
+        Map<String, List<DayReportDTO>> map = new HashMap();
         for(Diary dr : drs) {
             Calendar c= Calendar.getInstance();
             c.setTimeInMillis(dr.getReportDate());
             String day = c.get(Calendar.DAY_OF_MONTH) + "";
-            List<Diary> diaryList = map.get(day);
+            List<DayReportDTO> diaryList = map.get(day);
             if (diaryList ==null) {
-                diaryList = new ArrayList<Diary>();
+                diaryList = new ArrayList<DayReportDTO>();
             }
-            diaryList.add(dr);
+            ModelMapper modelMapper = new ModelMapper();
+            DayReportDTO drdto = modelMapper.map(dr.getTag(), DayReportDTO.class);
+            drdto.setData(modelMapper.map(dr, DiaryDTO.class));
+            diaryList.add(drdto);
             map.put(day, diaryList);
         }
         result.setData(map);
