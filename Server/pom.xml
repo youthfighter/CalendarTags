@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>top.youthfighter</groupId>
-	<artifactId>dailyreport</artifactId>
+	<artifactId>calendartag</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dailyreport</name>
-	<description>dailyReport</description>
+	<name>calendartag</name>
+	<description>calendartag</description>
 
 	<properties>
 		<java.version>1.8</java.version>

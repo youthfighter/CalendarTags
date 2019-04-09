@@ -1,15 +1,15 @@
-package top.youthfighter.dailyreport;
+package top.youthfighter.calendartag;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@MapperScan("top.youthfighter.dailyreport.mapper")
+@MapperScan("top.youthfighter.calendartag.mapper")
 @SpringBootApplication
-public class DailyreportApplication {
+public class CalendarTagApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DailyreportApplication.class, args);
+		SpringApplication.run(CalendarTagApplication.class, args);
 	}
 
 }

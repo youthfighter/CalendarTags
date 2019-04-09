@@ -1,11 +1,8 @@
-package top.youthfighter.dailyreport;
+package top.youthfighter.calendartag;
 
 import org.junit.Test;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class test {
     @Test

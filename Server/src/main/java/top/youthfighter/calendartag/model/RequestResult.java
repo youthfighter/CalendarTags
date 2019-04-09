@@ -1,4 +1,4 @@
-package top.youthfighter.dailyreport.model;
+package top.youthfighter.calendartag.model;
 
 public class RequestResult {
     private String errorCode = "";

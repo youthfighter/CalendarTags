@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="top.youthfighter.dailyreport.mapper.DailyReportMapper">
-    <select id="queryDataByAuthorAndMonth" resultType="top.youthfighter.dailyreport.model.DailyReport">
+<mapper namespace="top.youthfighter.calendartag.mapper.DiaryMapper">
+    <select id="queryDataByAuthorAndMonth" resultType="top.youthfighter.calendartag.model.Diary">
         select
-        dailyreport.id AS guid,
-        dailyreport.author AS author,
-        dailyreport.createDateTime as createDateTime,
-        dailyreport.describition as describition,
-        dailyreport.images as image,
-        dailyreport.reportDate as reportDate,
-        dailyreport.tagId as id,
-        dailyreport.url as url,
-        tag.name as name,
-        tag.color as color
-        from dailyreport
-        dailyreport LEFT JOIN tag ON dailyreport.tagId = tag.id
+        diary.id,
+        diary.author,
+        diary.createDateTime,
+        diary.describition,
+        diary.images,
+        diary.reportDate,
+        diary.url,
+        diary.tagId,
+        tag.name as "tag.name",
+        tag.color as "tag.color",
+        tag.id as "tag.id",
+        tag.isDelete as "tag.isDelete"
+        from diary
+        diary LEFT JOIN tag ON diary.tagId = tag.id
         where reportDate  <![CDATA[>= ]]> #{startTime} and reportDate  <![CDATA[<= ]]> #{endTime} and author=#{author}
-        order by reportDate,tagId
+        order by reportDate,tag.id
     </select>
 
-    <select id="selectDayData" resultType="top.youthfighter.dailyreport.model.DailyReport">
-        select * from dailyreport
+    <select id="selectDayData" resultType="top.youthfighter.calendartag.model.Diary">
+        select * from diary
         where author=#{author} and reportDate=#{reportDate}
     </select>
 
     <insert id="insert">
-        insert into dailyreport(id, year, month, day, reportDate, author, creater, createDateTime, duration, content)
+        insert into diary(id, year, month, day, reportDate, author, creater, createDateTime, duration, content)
         values(
             #{id},
             #{year},
@@ -41,7 +43,7 @@
     </insert>
 
     <update id="update">
-        update dailyreport
+        update diary
         set year=#{year},
         month=#{month},
         day=#{day},
