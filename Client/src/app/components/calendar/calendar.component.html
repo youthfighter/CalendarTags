@@ -37,10 +37,10 @@
             <div class="day-num" [ngClass]="{'not-cur-month':cdata.month != month}">{{cdata.day}}</div>
           </div>
           <div class="c-content">
-            <div class="diaries" ondrop="drop($event, i, j)" ondragover="allowDrop($event)">
-              <div class="tag" [style.backgroundColor]="tag.color" [attr.data-tagId]="tag.id" *ngFor="let tag of cdata.diaries;let idx=index;"
-                [attr.data-row]="i" [attr.data-column]="j" (mouseover)="mouseOverTag(cdata)" (onmouseout)="mouseOutTag(cdata)"
-                [draggable]="CanEdit" ondragstart="drag($event, cdata)">
+            <div class="diaries" *ngIf="cdata.month==month" (drop)="drop($event, cdata)" (dragover)="allowDrop($event)">
+              <div class="tag" [style.backgroundColor]="tag.color" [attr.data-tagId]="tag.id" *ngFor="let tag of cdata.tags;let idx=index;"
+                [attr.data-row]="i" [attr.data-column]="j" (mouseover)="mouseOverTag(tag)" (onmouseout)="mouseOutTag(tag)"
+                [draggable]="CanEdit" (dragstart)="drag($event, tag)" (click)="tagClick(tag)">
                 {{tag.name}}
               </div>
             </div>

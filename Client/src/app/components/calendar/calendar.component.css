@@ -10,6 +10,7 @@ header{
     display: flex;
     margin-bottom: 30px;
     align-items: center;
+    user-select: none;
 }
 .h-left,.h-right{
     display: flex;
@@ -86,6 +87,7 @@ header{
     justify-content: center;
     align-items: center;
     background: rgba(247, 247, 247,0.4);
+    user-select: none;
 }
 .table-body{
     display: flex;
@@ -121,6 +123,7 @@ header{
 .day-num{
     padding: 2px;
     align-self: flex-end;
+    user-select:none;
 }
 .not-cur-month{
     opacity: 0.4

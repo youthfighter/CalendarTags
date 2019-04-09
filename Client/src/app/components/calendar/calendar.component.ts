@@ -10,7 +10,7 @@ import { Tag } from './Tag';
 	styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-	
+
 	@Input('canEdit')
 	private canEdit = false;
 	get CanEdit() {
@@ -47,7 +47,7 @@ export class CalendarComponent implements OnInit {
 	}
 
 	public MonthChangedEvent = new EventEmitter<any>();
-
+	public ErrorEvent = new EventEmitter();
 	constructor() { }
 
 	ngOnInit() {
@@ -122,13 +122,8 @@ export class CalendarComponent implements OnInit {
 	 */
 	public setDayTags(day: number, tags: Tag[]) {
 		if (day < 1) return
-		this._calenderData.forEach(ele => {
-			ele.forEach(e => {
-				if (this.year === e.year && this.month === e.month && day === e.day) {
-					e['tags'] = tags;
-				}
-			});
-		});
+		let dayData = this.getDayData(day);
+		dayData['tags'] = tags;
 	}
 
 	/**
@@ -144,7 +139,19 @@ export class CalendarComponent implements OnInit {
 			});
 		});
 	}
-
+	private getDayData(day: number) {
+		let result;
+		for (let i = 0; i < this._calenderData.length; i++) {
+			for (let j = 0; j < this._calenderData[i].length; j++) {
+				let dayData = this._calenderData[i][j];
+				if (this.year === dayData.year && this.month === dayData.month && day === dayData.day) {
+					result = dayData;
+					break;
+				}
+			}
+		}
+		return result;
+	}
 
 	public TagMouseOverEvent = new EventEmitter();
 	private mouseOverTag(data: Map<number, Tag[]>) {
@@ -155,45 +162,65 @@ export class CalendarComponent implements OnInit {
 		this.TagMouseOutEvent.emit(data);
 	}
 
-	private hasTag(tagsArr: any[], type: number) {
+	private hasTag(tagsArr: Tag[], tagId: string) {
 		let flag = false;
-		for (let ele of tagsArr) {
-			if (ele.type === type) {
-				flag = true;
-				break;
+		if (Array.isArray(tagsArr)) {
+			for (let ele of tagsArr) {
+				if (ele.id === tagId) {
+					flag = true;
+					break;
+				}
 			}
 		}
 		return flag;
 	}
 
-	public addTag(i: number, j: number, type: number) {
-		let tagsArr = this._calenderData[i][j].tags;
-		if (tagsArr) {
-			if (!this.hasTag(tagsArr, type)) tagsArr.push({ type });
+	public addTag(day: number, tag: Tag) {
+		if (day < 1) {
+			this.ErrorEvent.emit('day < 1');
+			return false;
+		}
+		let dayData = this.getDayData(day);
+		if (Array.isArray(dayData['tags'])) {
+			dayData['tags'].push(tag);
 		} else {
-			this._calenderData[i][j].tags = [{ type }];
+			dayData['tags'] = tag;
 		}
 	}
 
-	drag(event, data) {
+	private drag(event, tag: Tag) {
 		if (!this.canEdit) return false;
-		console.log(event);
-		event.dataTransfer.setData("Text", JSON.stringify(data));
+		event.dataTransfer.setData("Text", JSON.stringify(tag));
 	}
 
-	allowDrop(event) {
+	private allowDrop(event) {
 		if (!this.canEdit) return false;
 		event.preventDefault();
-		console.log('allow')
 	}
 
-	private BeforeAddTagEvent = new EventEmitter();
-	drop(event, row: number, column: number) {
+	public AddTagEvent = new EventEmitter();
+	private drop(event, data: any) {
 		if (!this.canEdit) return false;
 		event.preventDefault();
-		if (isNaN(row) || isNaN(column)) return false;
-		this.BeforeAddTagEvent.emit(JSON.parse(event.dataTransfer.getData("Text")))
-		this.addTag(row, column, parseInt(event.dataTransfer.getData("Text")));
+		let tag = JSON.parse(event.dataTransfer.getData("Text")) as Tag;
+		if (!tag.id) {
+			this.ErrorEvent.emit('tag id is null');
+			return false;
+		}
+		if (this.hasTag(data.tags, tag.id)) {
+			this.ErrorEvent.emit('tag is exist');
+			return false;
+		}
+		this.AddTagEvent.emit({
+			year: this.year,
+			month: this.month + 1,
+			day: data.day,
+			tagId: tag.id
+		});
+	}
+	public TagClickEvent = new EventEmitter();
+	private tagClick(tag: Tag) {
+		this.TagClickEvent.emit(tag);
 	}
 
 	@ViewChild('tbody')

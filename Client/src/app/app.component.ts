@@ -32,6 +32,15 @@ export class AppComponent implements OnInit {
     this.calendar.TagMouseOutEvent.subscribe((data: Map<number, Tag[]>) => {
       console.log(data);
     });
+    this.calendar.AddTagEvent.subscribe(data => {
+      console.log('AddTagEvent', data);
+    });
+    this.calendar.ErrorEvent.subscribe(data => {
+      console.log('ErrorEvent', data)
+    });
+    this.calendar.TagClickEvent.subscribe(data => {
+      console.log('TagClickEvent', data);
+    })
   }
 
   @ViewChild('calendar')

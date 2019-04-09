@@ -17,6 +17,17 @@ export class AppService {
 				error: '参数错误'
 			}
 		}
-		return this.http.get(`${this.BASE_PATH}/v1/monthreport?year=${year}&month=${month}`).toPromise();
+		return {
+			data: {
+				'1': [
+					{
+						id: '1',
+						name: '学习',
+						color: '#abc'
+					}
+				]
+			}
+		}
+		//return this.http.get(`${this.BASE_PATH}/v1/monthreport?year=${year}&month=${month}`).toPromise();
 	}
 }
