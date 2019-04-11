@@ -63,8 +63,8 @@ public class DiaryController {
         return result;
     }
 
-    @RequestMapping(value="/calendartag", method = RequestMethod.POST)
-    public RequestResult insert(@RequestBody Diary diary) {
+    @RequestMapping(value="/diary", method = RequestMethod.POST)
+    public RequestResult addDiary(@RequestBody Diary diary) {
         RequestResult result = new RequestResult();
         //check
         if (diary.getReportDate() == null) {
