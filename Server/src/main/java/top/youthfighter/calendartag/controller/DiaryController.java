@@ -7,7 +7,9 @@ import top.youthfighter.calendartag.dto.DayReportDTO;
 import top.youthfighter.calendartag.dto.DiaryDTO;
 import top.youthfighter.calendartag.model.Diary;
 import top.youthfighter.calendartag.model.RequestResult;
+import top.youthfighter.calendartag.model.Tag;
 import top.youthfighter.calendartag.service.DiaryService;
+import top.youthfighter.calendartag.service.TagService;
 import top.youthfighter.calendartag.util.DateUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,16 +29,19 @@ public class DiaryController {
     @Autowired
     public DiaryService diaryService;
 
+    @Autowired
+    public TagService tagService;
+
     @RequestMapping("/monthreport")
     public RequestResult monthReport(@RequestParam("year") int year, @RequestParam("month") int month) {
         RequestResult result = new RequestResult();
         //check
         if (year < 1970) {
-            result.setErrorCode("params error");
+            result.setError("参数错误.");
             return result;
         }
         if (month < 1 || month > 12) {
-            result.setErrorCode("params error");
+            result.setError("参数错误.");
             return result;
         }
         String author = "youthfighter";
@@ -68,25 +73,30 @@ public class DiaryController {
         RequestResult result = new RequestResult();
         //check
         if (diary.getReportDate() == null) {
-            result.setErrorCode("need reportDate");
+            result.setError("参数错误.");
             return result;
         }
 
         if (diary.getDescribition() == null || "".equals(diary.getDescribition())) {
-            result.setErrorCode("need describition");
+            result.setError("请填写描述.");
             return result;
         }
 
         if (diary.getDescribition().length() > 200) {
-            result.setErrorCode("describition too long");
+            result.setError("描述需在200字以内.");
             return result;
         }
 
         if (diary.getTagId() == null || "".equals(diary.getTagId())) {
-            result.setErrorCode("need tagId");
+            result.setError("标签类型错误.");
             return result;
         }
-
+        //验证tagId是否存在
+        Tag tag = tagService.queryEnabledTagsById(diary.getTagId());
+        if (tag == null) {
+            result.setError("该标签不存在.");
+            return result;
+        }
         diary.setId(UUID.randomUUID().toString().replaceAll("-", ""));
         diary.setCreateDateTime(System.currentTimeMillis());
         diary.setAuthor("youthfighter");
@@ -96,7 +106,10 @@ public class DiaryController {
         Long oneDayTimestamps= Long.valueOf(60*60*24*1000);
         diary.setReportDate(c.getTimeInMillis()-(c.getTimeInMillis() + 60*60*8*1000)%oneDayTimestamps);
         diaryService.insert(diary);
-        result.setData(diary);
+        ModelMapper modelMapper = new ModelMapper();
+        DayReportDTO drdto = modelMapper.map(tag, DayReportDTO.class);
+        drdto.setData(modelMapper.map(diary, DiaryDTO.class));
+        result.setData(drdto);
         return result;
     }
 }

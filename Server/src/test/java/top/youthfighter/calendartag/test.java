@@ -2,7 +2,7 @@ package top.youthfighter.calendartag;
 
 import org.junit.Test;
 
-import java.util.Calendar;
+import java.util.*;
 
 public class test {
     @Test
@@ -17,5 +17,11 @@ public class test {
         c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
         long lastDay = c.getTimeInMillis();
         System.out.println(lastDay);
+    }
+
+    @Test
+    public void bb() {
+        List<String> abc = new ArrayList<String>();
+        System.out.println(abc.size());
     }
 }

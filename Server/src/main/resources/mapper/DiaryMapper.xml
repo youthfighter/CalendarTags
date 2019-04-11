@@ -27,18 +27,16 @@
     </select>
 
     <insert id="insert">
-        insert into diary(id, year, month, day, reportDate, author, creater, createDateTime, duration, content)
+        insert into diary(id, reportDate, author, createDateTime, tagId,url, images, describition)
         values(
             #{id},
-            #{year},
-            #{month},
-            #{day},
             #{reportDate},
             #{author},
-            #{creater},
             #{createDateTime},
-            #{duration},
-            #{content}
+            #{tagId},
+            #{url},
+            #{images},
+            #{describition}
         )
     </insert>
 
