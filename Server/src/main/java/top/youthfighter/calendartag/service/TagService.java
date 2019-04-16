@@ -25,4 +25,12 @@ public class TagService {
             return tags.get(0);
         }
     }
+
+    public Tag inset(Tag tag){
+        return tag;
+    }
+
+    public Tag update(Tag tag) {
+        return tag;
+    }
 }

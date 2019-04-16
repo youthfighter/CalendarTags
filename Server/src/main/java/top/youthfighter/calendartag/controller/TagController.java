@@ -47,6 +47,25 @@ public class TagController {
         }
         tag.setId(UUID.randomUUID().toString().replaceAll("-", ""));
         tag.setDelete(false);
+        tagService.insert(tag);
+        result.setData(tag);
+        return result;
+    }
+
+    @RequestMapping(value="/tag", method = RequestMethod.PATCH)
+    public RequestResult updateStatus(@RequestBody Tag tag) {
+        RequestResult result = new RequestResult();
+        if (tag.getName() == null) {
+            result.setError("请输入标签名称.");
+            return result;
+        }
+        if (tag.getColor() == null) {
+            result.setError("请输入标签对应的颜色值.");
+            return result;
+        }
+        tag.setId(UUID.randomUUID().toString().replaceAll("-", ""));
+        tag.setDelete(false);
+        tagService.update(tag);
         result.setData(tag);
         return result;
     }
