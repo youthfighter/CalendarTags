@@ -4,6 +4,9 @@ public class TagDTO {
     private String id;
     private String name;
     private String color;
+    private int status;
+    private int usageCount;
+
 
     public String getId() {
         return id;
@@ -12,7 +15,20 @@ public class TagDTO {
     public void setId(String id) {
         this.id = id;
     }
+    public int getStatus() {
+        return status;
+    }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    public int getUsageCount() {
+        return usageCount;
+    }
+
+    public void setUsageCount(int usageCount) {
+        this.usageCount = usageCount;
+    }
     public String getName() {
         return name;
     }

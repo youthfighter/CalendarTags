@@ -53,4 +53,10 @@
         content=#{content}
         where id=#{id}
     </update>
+
+    <select id="tagCount" resultType="int">
+        select count(*)
+        from diary
+        where tagId = #{id}
+    </select>
 </mapper>

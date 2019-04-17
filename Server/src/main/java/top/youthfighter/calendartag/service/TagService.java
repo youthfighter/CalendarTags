@@ -18,7 +18,7 @@ public class TagService {
     }
 
     public Tag queryEnabledTagsById(String id) {
-        List<Tag> tags = tagMapper.queryEnabledTagsById(id);
+        List<Tag> tags = tagMapper.queryTagsById(id, );
         if (tags.size() == 0) {
             return null;
         } else {
@@ -26,11 +26,32 @@ public class TagService {
         }
     }
 
-    public Tag inset(Tag tag){
+    public Tag queryTagsByParam() {
+
+    }
+    public Tag queryTagsById(String id) {
+        List<Tag> tags = tagMapper.queryTagsById(id);
+        if (tags.size() == 0) {
+            return null;
+        } else {
+            return tags.get(0);
+        }
+    }
+
+    public Tag insert(Tag tag){
         return tag;
     }
 
     public Tag update(Tag tag) {
         return tag;
+    }
+
+    public Tag queryTagsByName(String name) {
+        List<Tag> tags = tagMapper.queryTagsById(name);
+        if (tags.size() == 0) {
+            return null;
+        } else {
+            return tags.get(0);
+        }
     }
 }

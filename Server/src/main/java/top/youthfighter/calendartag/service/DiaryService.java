@@ -33,4 +33,8 @@ public class DiaryService {
     public List<Diary> queryDataById(String id) {
         return diaryMapper.selectDataById(id);
     }
+
+    public int tagCount(String tagId) {
+        return diaryMapper.tagCount(tagId);
+    }
 }

@@ -8,5 +8,7 @@ public interface TagMapper {
 
     public List<Tag> queryAll();
 
-    public List<Tag> queryEnabledTagsById(String id);
+    public List<Tag> queryTagsById(String id);
+
+    public  List<Tag> queryTagsByName();
 }

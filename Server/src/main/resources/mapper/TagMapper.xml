@@ -2,21 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="top.youthfighter.calendartag.mapper.TagMapper">
     <select id="queryAll" resultType="top.youthfighter.calendartag.model.Tag">
-        select id, name, isDelete, color
+        select id, name, status, color
         from tag
-        order by isDelete
+        order by status
     </select>
 
     <select id="queryEnabledTags" resultType="top.youthfighter.calendartag.model.Tag">
-        select id, name, isDelete, color
+        select id, name, status, color
         from tag
-        order by isDelete
+        order by status
     </select>
 
-    <select id="queryEnabledTagsById" resultType="top.youthfighter.calendartag.model.Tag">
-        select id, name, isDelete, color
+    <select id="queryTagsById" resultType="top.youthfighter.calendartag.model.Tag">
+        select id, name, status, color
         from tag
-        where isDelete = 0 and id = #{id}
-        order by isDelete
+        where id = #{id}
+    </select>
+
+    <select id="queryTagsByName" resultType="top.youthfighter.calendartag.model.Tag">
+        select id, name, status, color
+        from tag
+        where name = #{name}
     </select>
 </mapper>

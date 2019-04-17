@@ -18,4 +18,6 @@ public interface DiaryMapper {
 
     public void insert(Diary diary);
 
+    public int tagCount(String tagId);
+
 }
