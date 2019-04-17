@@ -3,7 +3,7 @@ package top.youthfighter.calendartag.model;
 public class Tag {
     private String id;
     private String name;
-    private boolean disable;
+    private int status;
     private String color;
 
     public String getId() {
@@ -30,11 +30,11 @@ public class Tag {
         this.color = color;
     }
 
-    public boolean isDisable() {
-        return disable;
+    public int getStatus() {
+        return status;
     }
 
-    public void setDisable(boolean disable) {
-        this.disable = disable;
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

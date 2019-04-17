@@ -18,7 +18,10 @@ public class TagService {
     }
 
     public Tag queryEnabledTagsById(String id) {
-        List<Tag> tags = tagMapper.queryTagsById(id, );
+        Tag tag = new Tag();
+        tag.setId(id);
+        tag.setStatus(1);
+        List<Tag> tags = queryTagsByParam(tag);
         if (tags.size() == 0) {
             return null;
         } else {
@@ -26,11 +29,14 @@ public class TagService {
         }
     }
 
-    public Tag queryTagsByParam() {
-
+    public List<Tag> queryTagsByParam(Tag tag) {
+        return tagMapper.queryTagsByParam(tag);
     }
-    public Tag queryTagsById(String id) {
-        List<Tag> tags = tagMapper.queryTagsById(id);
+
+    public Tag queryTagById(String id) {
+        Tag tag = new Tag();
+        tag.setId(id);
+        List<Tag> tags = tagMapper.queryTagsByParam(tag);
         if (tags.size() == 0) {
             return null;
         } else {
@@ -39,15 +45,19 @@ public class TagService {
     }
 
     public Tag insert(Tag tag){
-        return tag;
+        tagMapper.insert(tag);
+        return queryTagById(tag.getId());
     }
 
     public Tag update(Tag tag) {
-        return tag;
+        tagMapper.update(tag);
+        return queryTagById(tag.getId());
     }
 
     public Tag queryTagsByName(String name) {
-        List<Tag> tags = tagMapper.queryTagsById(name);
+        Tag tag = new Tag();
+        tag.setName(name);
+        List<Tag> tags = tagMapper.queryTagsByParam(tag);
         if (tags.size() == 0) {
             return null;
         } else {

@@ -14,7 +14,7 @@
         tag.name as "tag.name",
         tag.color as "tag.color",
         tag.id as "tag.id",
-        tag.isDelete as "tag.isDelete"
+        tag.status as "tag.status"
         from diary
         diary LEFT JOIN tag ON diary.tagId = tag.id
         where reportDate  <![CDATA[>= ]]> #{startTime} and reportDate  <![CDATA[<= ]]> #{endTime} and author=#{author}

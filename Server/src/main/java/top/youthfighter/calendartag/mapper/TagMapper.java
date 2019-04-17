@@ -8,7 +8,11 @@ public interface TagMapper {
 
     public List<Tag> queryAll();
 
-    public List<Tag> queryTagsById(String id);
-
     public  List<Tag> queryTagsByName();
+
+    public List<Tag> queryTagsByParam(Tag tag);
+
+    public void update(Tag tag);
+
+    public void insert(Tag tag);
 }

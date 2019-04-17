@@ -92,9 +92,12 @@ public class DiaryController {
             return result;
         }
         //验证tagId是否存在
-        Tag tag = tagService.queryEnabledTagsById(diary.getTagId());
+        Tag tag = tagService.queryTagById(diary.getTagId());
         if (tag == null) {
             result.setError("该标签不存在.");
+            return result;
+        } else if(tag.getStatus() == 2) {
+            result.setError("该标签已停用.");
             return result;
         }
         diary.setId(UUID.randomUUID().toString().replaceAll("-", ""));
