@@ -3,7 +3,7 @@ package top.youthfighter.calendartag.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import top.youthfighter.calendartag.dto.TagDTO;
+import top.youthfighter.calendartag.dto.TagUsageDTO;
 import top.youthfighter.calendartag.model.RequestResult;
 import top.youthfighter.calendartag.model.Tag;
 import top.youthfighter.calendartag.service.DiaryService;
@@ -40,11 +40,11 @@ public class TagController {
         if (status != null) param.setStatus(status);
         tags = tagService.queryTagsByParam(param);
         ModelMapper mp = new ModelMapper();
-        List<TagDTO> tagsDto = new ArrayList<TagDTO>();
+        List<TagUsageDTO> tagsDto = new ArrayList<TagUsageDTO>();
         for (Tag tag : tags) {
-            TagDTO tagDto = mp.map(tag, TagDTO.class);
-            tagDto.setUsageCount(diaryService.tagCount(tag.getId()));
-            tagsDto.add(tagDto);
+            TagUsageDTO tagUsageDto = mp.map(tag, TagUsageDTO.class);
+            tagUsageDto.setUsageCount(diaryService.tagCount(tag.getId()));
+            tagsDto.add(tagUsageDto);
         }
         result.setData(tagsDto);
         return result;
@@ -73,9 +73,9 @@ public class TagController {
         tag.setId(UUID.randomUUID().toString().replaceAll("-", ""));
         tag.setStatus(1);
         ModelMapper mp = new ModelMapper();
-        TagDTO tagDto = mp.map(tagService.insert(tag), TagDTO.class);
-        tagDto.setUsageCount(0);
-        result.setData(tagDto);
+        TagUsageDTO tagUsageDto = mp.map(tagService.insert(tag), TagUsageDTO.class);
+        tagUsageDto.setUsageCount(0);
+        result.setData(tagUsageDto);
         return result;
     }
 
@@ -96,9 +96,9 @@ public class TagController {
             return result;
         }
         ModelMapper mp = new ModelMapper();
-        TagDTO tagDto = mp.map(tagService.update(tag), TagDTO.class);
-        tagDto.setUsageCount(diaryService.tagCount(tag.getId()));
-        result.setData(tagDto);
+        TagUsageDTO tagUsageDto = mp.map(tagService.update(tag), TagUsageDTO.class);
+        tagUsageDto.setUsageCount(diaryService.tagCount(tag.getId()));
+        result.setData(tagUsageDto);
         return result;
     }
 
@@ -117,9 +117,9 @@ public class TagController {
         }
         tag.setStatus(status);
         ModelMapper mp = new ModelMapper();
-        TagDTO tagDto = mp.map(tagService.update(tag), TagDTO.class);
-        tagDto.setUsageCount(diaryService.tagCount(tag.getId()));
-        result.setData(tagDto);
+        TagUsageDTO tagUsageDto = mp.map(tagService.update(tag), TagUsageDTO.class);
+        tagUsageDto.setUsageCount(diaryService.tagCount(tag.getId()));
+        result.setData(tagUsageDto);
         return result;
     }
 }

@@ -20,4 +20,6 @@ public interface DiaryMapper {
 
     public int tagCount(String tagId);
 
+    public int deleteById(String id);
+
 }

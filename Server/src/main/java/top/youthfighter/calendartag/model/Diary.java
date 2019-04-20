@@ -6,17 +6,9 @@ public class Diary {
     private String author;
     private Long createDateTime;
     private String tagId;
-    private Tag tag;
     private String url;
     private String images;
     private String describition;
-    public Tag getTag() {
-        return tag;
-    }
-
-    public void setTag(Tag tag) {
-        this.tag = tag;
-    }
 
     public String getId() {
         return id;

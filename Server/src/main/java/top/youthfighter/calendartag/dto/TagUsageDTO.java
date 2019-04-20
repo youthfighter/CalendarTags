@@ -1,6 +1,6 @@
 package top.youthfighter.calendartag.dto;
 
-public class TagDTO {
+public class TagUsageDTO {
     private String id;
     private String name;
     private String color;

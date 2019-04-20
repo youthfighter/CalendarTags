@@ -3,7 +3,6 @@ package top.youthfighter.calendartag.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import top.youthfighter.calendartag.dto.DayReportDTO;
 import top.youthfighter.calendartag.dto.DiaryDTO;
 import top.youthfighter.calendartag.model.Diary;
 import top.youthfighter.calendartag.model.RequestResult;
@@ -45,29 +44,49 @@ public class DiaryController {
             return result;
         }
         String author = "youthfighter";
+
+        //查询所有的标签信息
+        List<Tag> tags = tagService.queryAll();
+        //构造标签hashmap
+        Map<String, Tag> tagMap = new HashMap<String, Tag>();
+        for (Tag tag: tags) {
+            tagMap.put(tag.getId(), tag);
+        }
         //生成查询月日期
         long firstDay = DateUtil.getFirstDay(year, month-1);
         long lastDay = DateUtil.getLastDay(year, month-1);
+        //查村某月的数据
         List<Diary> drs = diaryService.queryDataByAuthorAndMonth(firstDay, lastDay, author);
-        Map<String, List<DayReportDTO>> map = new HashMap();
+        //构造返回map
+        Map<String, List<DiaryDTO>> map = new HashMap();
         for(Diary dr : drs) {
             Calendar c= Calendar.getInstance();
             c.setTimeInMillis(dr.getReportDate());
             String day = c.get(Calendar.DAY_OF_MONTH) + "";
-            List<DayReportDTO> diaryList = map.get(day);
+            List<DiaryDTO> diaryList = map.get(day);
             if (diaryList ==null) {
-                diaryList = new ArrayList<DayReportDTO>();
+                diaryList = new ArrayList<DiaryDTO>();
             }
             ModelMapper modelMapper = new ModelMapper();
-            DayReportDTO drdto = modelMapper.map(dr.getTag(), DayReportDTO.class);
-            drdto.setData(modelMapper.map(dr, DiaryDTO.class));
-            diaryList.add(drdto);
+            DiaryDTO diaryDTO = modelMapper.map(dr, DiaryDTO.class);
+            diaryDTO.setTag(tagMap.get(dr.getTagId()));
+            diaryList.add(diaryDTO);
             map.put(day, diaryList);
         }
         result.setData(map);
         return result;
     }
 
+    @RequestMapping(value = "/diary/{id}", method = RequestMethod.DELETE)
+    public RequestResult deleteDiary(@PathVariable("id") String id) {
+        RequestResult result = new RequestResult();
+        //to do 判断当前登录者是否有权限删除数据
+        System.out.println(id);
+        int num = diaryService.deleteById(id);
+        System.out.println(num);
+        result.setData("success");
+        return result;
+    }
     @RequestMapping(value="/diary", method = RequestMethod.POST)
     public RequestResult addDiary(@RequestBody Diary diary) {
         RequestResult result = new RequestResult();
@@ -110,9 +129,9 @@ public class DiaryController {
         diary.setReportDate(c.getTimeInMillis()-(c.getTimeInMillis() + 60*60*8*1000)%oneDayTimestamps);
         diaryService.insert(diary);
         ModelMapper modelMapper = new ModelMapper();
-        DayReportDTO drdto = modelMapper.map(tag, DayReportDTO.class);
-        drdto.setData(modelMapper.map(diary, DiaryDTO.class));
-        result.setData(drdto);
+        DiaryDTO diaryDTO = modelMapper.map(diary, DiaryDTO.class);
+        diaryDTO.setTag(tag);
+        result.setData(diaryDTO);
         return result;
     }
 }

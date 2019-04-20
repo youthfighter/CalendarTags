@@ -10,15 +10,10 @@
         diary.images,
         diary.reportDate,
         diary.url,
-        diary.tagId,
-        tag.name as "tag.name",
-        tag.color as "tag.color",
-        tag.id as "tag.id",
-        tag.status as "tag.status"
+        diary.tagId
         from diary
-        diary LEFT JOIN tag ON diary.tagId = tag.id
         where reportDate  <![CDATA[>= ]]> #{startTime} and reportDate  <![CDATA[<= ]]> #{endTime} and author=#{author}
-        order by reportDate,tag.id
+        order by reportDate
     </select>
 
     <select id="selectDayData" resultType="top.youthfighter.calendartag.model.Diary">
@@ -55,8 +50,14 @@
     </update>
 
     <select id="tagCount" resultType="int">
-        select count(*)
+        select count(id)
         from diary
-        where tagId = #{id}
+        where tagId = #{tagId}
     </select>
+
+    <delete id="deleteById">
+        delete
+        from diary
+        where id = #{id}
+    </delete>
 </mapper>

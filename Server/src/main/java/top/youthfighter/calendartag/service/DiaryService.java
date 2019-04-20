@@ -37,4 +37,8 @@ public class DiaryService {
     public int tagCount(String tagId) {
         return diaryMapper.tagCount(tagId);
     }
+
+    public int deleteById(String id) {
+        return diaryMapper.deleteById(id);
+    }
 }

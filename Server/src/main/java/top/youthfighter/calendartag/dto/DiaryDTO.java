@@ -1,5 +1,7 @@
 package top.youthfighter.calendartag.dto;
 
+import top.youthfighter.calendartag.model.Tag;
+
 public class DiaryDTO {
     private String id;
     private Long reportDate;
@@ -8,6 +10,9 @@ public class DiaryDTO {
     private String url;
     private String images;
     private String describition;
+    private String tagId;
+    private String tagName;
+    private String tagColor;
 
     public String getId() {
         return id;
@@ -63,5 +68,36 @@ public class DiaryDTO {
 
     public void setDescribition(String describition) {
         this.describition = describition;
+    }
+
+    public String getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(String tagId) {
+        this.tagId = tagId;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+    public String getTagColor() {
+        return tagColor;
+    }
+
+    public void setTagColor(String tagColor) {
+        tagColor = tagColor;
+    }
+
+    public void setTag(Tag tag) {
+        if (tag == null) return;
+        this.tagId = tag.getId();
+        this.tagName = tag.getName();
+        this.tagColor = tag.getColor();
     }
 }
