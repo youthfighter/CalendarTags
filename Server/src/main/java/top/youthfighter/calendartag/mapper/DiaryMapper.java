@@ -12,7 +12,7 @@ public interface DiaryMapper {
 
     public List<Diary> selectDayData(@Param("reportDate") Date reportDate, @Param("author") String author);
 
-    public List<Diary> selectDataById(String id);
+    public Diary selectDataById(String id);
 
     public void update(Diary diary);
 

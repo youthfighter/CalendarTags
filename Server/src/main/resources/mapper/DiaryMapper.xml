@@ -21,6 +21,11 @@
         where author=#{author} and reportDate=#{reportDate}
     </select>
 
+    <select id="selectDataById" resultType="top.youthfighter.calendartag.model.Diary">
+        select * from diary
+        where id=#{id}
+    </select>
+
     <insert id="insert">
         insert into diary(id, reportDate, author, createDateTime, tagId,url, images, describition)
         values(
@@ -37,15 +42,7 @@
 
     <update id="update">
         update diary
-        set year=#{year},
-        month=#{month},
-        day=#{day},
-        reportDate=#{reportDate},
-        author=#{author},
-        creater=#{creater},
-        createDateTime=#{createDateTime},
-        duration=#{duration},
-        content=#{content}
+        set describition=#{describition}
         where id=#{id}
     </update>
 

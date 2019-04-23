@@ -134,4 +134,32 @@ public class DiaryController {
         result.setData(diaryDTO);
         return result;
     }
+
+    @RequestMapping(value="/diary", method = RequestMethod.PUT)
+    public RequestResult updateDiary(@RequestBody Diary diary) {
+        RequestResult result = new RequestResult();
+        //check
+        if (diary.getDescribition() == null || "".equals(diary.getDescribition())) {
+            result.setError("请填写描述.");
+            return result;
+        }
+
+        if (diary.getDescribition().length() > 200) {
+            result.setError("描述需在200字以内.");
+            return result;
+        }
+        // TODO: 2019/4/22 0022  是否为当前登陆者
+        Diary cdiary = diaryService.queryDataById(diary.getId());
+        if (cdiary == null) {
+            result.setError("该日记已被删除.");
+            return result;
+        }
+        cdiary.setDescribition(diary.getDescribition());
+        diaryService.update(diary);
+        ModelMapper modelMapper = new ModelMapper();
+        DiaryDTO diaryDTO = modelMapper.map(diary, DiaryDTO.class);
+        diaryDTO.setTag(tagService.queryTagById(diary.getTagId()));
+        result.setData(diaryDTO);
+        return result;
+    }
 }

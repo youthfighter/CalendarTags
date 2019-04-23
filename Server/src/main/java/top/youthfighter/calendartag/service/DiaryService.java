@@ -30,7 +30,7 @@ public class DiaryService {
         return diaryMapper.selectDayData(reportDate, author);
     }
 
-    public List<Diary> queryDataById(String id) {
+    public Diary queryDataById(String id) {
         return diaryMapper.selectDataById(id);
     }
 
